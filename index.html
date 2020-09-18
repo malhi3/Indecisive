@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style media="screen">
+      body {
+        font-family: 'Noto Serif SC', serif;
+      }
+
+      #header-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #title {
+        font-size: 50px;
+        font-weight: 300;
+        border-bottom: solid 3px;
+        display: inline-block;
+      }
+
+      .section-heading {
+        text-align: center;
+      }
+
+      #spacer {
+        width: 100%;
+        height: 100px;
+      }
+
+      button:focus {
+        outline: none;
+      }
+
+      input[type="text"]:focus {
+        outline: none;
+      }
+
+      ::-webkit-input-placeholder {
+         font-style: italic;
+      }
+      :-moz-placeholder {
+         font-style: italic;
+      }
+      ::-moz-placeholder {
+         font-style: italic;
+      }
+      :-ms-input-placeholder {
+         font-style: italic;
+      }
+
+      .card {
+        border: none;
+        border-bottom: 1px solid grey;
+        margin-bottom: 20px;
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .form-div {
+        flex-grow: 1;
+      }
+
+      .tools-div {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .tools-div:hover {
+        color: red;
+        cursor: pointer;
+      }
+
+      label {
+        font-size: 30px;
+      }
+
+      input {
+        margin: 10px 0px;
+      }
+
+      .name-input {
+        border: none;
+        border-bottom: 3px solid black;
+        font-size: 20px;
+        width: 500px;
+      }
+
+      .add-card-btn {
+        width: 100%;
+        font-size: 30px;
+        color: white;
+        border: solid 1px #0398fc;
+        border-radius: 30px;
+        background-color: #0398fc;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .add-card-btn:hover {
+        cursor: pointer;
+        color: #0398fc;
+        background-color: white;
+      }
+
+      .add-card-btn:focus {
+        outline: none;
+      }
+
+      .range-parent {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+      }
+
+      td {
+        padding-right: 30px;
+      }
+
+      #activity-section .range-parent {
+        display: inline-flex;
+        margin-left: 20px;
+      }
+
+      .range-el {
+        padding: 15px 25px;
+        font-size: 20px;
+        font-family: Helvetica;
+        border: solid 1px;
+      }
+
+      .range-el:hover {
+        cursor: pointer;
+      }
+
+      #footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+      }
+
+      #footer button {
+        float: right;
+        margin: 20px;
+        background-color: #0398fc;
+        color: white;
+        border: solid 1px #0398fc;
+        font-size: 25px;
+        letter-spacing: 2px;
+        padding: 10px 20px;
+        border-radius: 4px;
+        transition: background-color 0.3s, color 0.3s;
+        z-index: 2;
+        box-shadow: 0px 0px 0px 2px white;
+        pointer-events: auto;
+      }
+
+      #footer button:hover {
+        cursor: pointer;
+        background-color: white;
+        color: #0398fc;
+      }
+
+      .activity-criteria-el {
+        margin-bottom: 10px;
+      }
+
+      #results-section {
+        width: 50%;
+        margin-left: 25%;
+        margin-right: 25%;
+      }
+
+      #results-ol li:nth-child(-n+3) {
+        font-weight: bold;
+        font-size: 40px;
+      }
+
+      #results-ol {
+        list-style-position: inside;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="header-section">
+        <h1 id="title">Indecisive</h1>
+      </div>
+
+      <div id="criteria-section">
+      </div>
+
+      <div id="activity-section">
+      </div>
+
+      <div id="results-section"></div>
+
+      <div id="spacer"></div>
+
+    </div>
+
+    <div id="footer">
+      <button type="button" name="next-btn" id="next-btn">Next</button>
+    </div>
+
+    <script src="js/helpers.js" charset="utf-8"></script>
+    <script type="text/javascript">
+
+      var critData = {};
+      var activityData = {};
+
+
+      window.addEventListener('load', function() {
+        initCriteria();
+        // var div = makeRangeDiv({'class': 'hi', 'value': '5'});
+        // document.getElementById('container').appendChild(div);
+      });
+
+      function addCriteriaCard() {
+        var criteriaDivContainer = document.getElementById('criteria-div-container');
+
+        var parentDiv = makeElement('div', {
+          'class': 'criteria-div card',
+        });
+
+        var trashIcon = makeElement('i', {
+          'class': 'fa fa-trash-o trash-icon',
+          'style': 'display: none; font-size: 35px;'
+        });
+
+        var toolsDiv = makeElement('div', {
+          'class': 'criteria-div-tools tools-div',
+        });
+
+        toolsDiv.appendChild(trashIcon);
+
+        toolsDiv.onclick = function () {
+          var element = this.parentElement;
+          element.parentNode.removeChild(element);
+        }
+
+        parentDiv.onmouseover = function (){
+          trashIcon.style.display = 'block';
+        }
+
+        parentDiv.onmouseout = function () {
+          trashIcon.style.display = 'none';
+        }
+
+        var formDiv = makeElement('div', {
+          'class': 'criteria-div-form form-div',
+        });
+
+
+        var critNameLabel = makeElement('label', {
+          'for': 'criteria-name'
+        }, 'Name of criteria');
+
+        var critNameInput = makeElement('input', {
+          'type': 'text',
+          'class': 'criteria-name name-input',
+          'placeholder': 'E.g. How much does it contribute to my job experience?'
+        });
+
+        var critImpLabel = makeElement('label', {
+          'for': 'criteria-importance'
+        }, 'How important do you feel this criteria is for your decision?');
+
+        // var critImpValue = makeElement('span', {
+        //   'class': 'criteria-importance-value'
+        // }, '5');
+
+        var critImpInput = makeRangeDiv({
+          'class': 'criteria-importance',
+        });
+        // var critImpInput = makeElement('input', {
+        //   'type': 'range',
+        //   'min': '1',
+        //   'max': '10',
+        //   'value': '5',
+        //   'class': 'slider criteria-importance',
+        // });
+        //
+        // critImpInput.oninput = function (){
+        //   critImpValue.innerHTML = this.value;
+        // }
+
+        appendChildren(formDiv, [critNameLabel, document.createElement('br'), critNameInput, document.createElement('br'), critImpLabel, document.createElement('br'), critImpInput]);
+        appendChildren(parentDiv, [formDiv, toolsDiv]);
+        criteriaDivContainer.appendChild(parentDiv);
+      }
+
+      function addActivitiesCard() {
+        var activityDivContainer = document.getElementById('activity-div-container');
+
+        var parentDiv = makeElement('div', {
+          'class': 'activity-div card',
+        });
+
+        var trashIcon = makeElement('i', {
+          'class': 'fa fa-trash-o trash-icon',
+          'style': 'display: none; font-size: 35px;'
+        });
+
+        var toolsDiv = makeElement('div', {
+          'class': 'activity-div-tools tools-div',
+        });
+
+        toolsDiv.appendChild(trashIcon);
+
+        toolsDiv.onclick = function () {
+          var element = this.parentElement;
+          element.parentNode.removeChild(element);
+        }
+
+        parentDiv.onmouseover = function (){
+          trashIcon.style.display = 'block';
+        }
+
+        parentDiv.onmouseout = function () {
+          trashIcon.style.display = 'none';
+        }
+
+        var formDiv = makeElement('div', {
+          'class': 'activity-div-form form-div',
+        });
+
+
+        var actNameLabel = makeElement('label', {
+          'for': 'activity-name'
+        }, 'Name of activity');
+
+        var actNameInput = makeElement('input', {
+          'type': 'text',
+          'class': 'activity-name name-input',
+          'placeholder': 'E.g. Hockey'
+        });
+
+        var h1 = makeElement('h1', {}, 'On a scale of 1-10, how well does this activity fulfil the following criteria:');
+
+        var criteria = [];
+        var table = makeElement('table', {
+          'class': 'activities-criteria-table'
+        });
+
+        for (var critName in critData) {
+          (function () {
+            var tr = document.createElement('tr');
+            var td1 = document.createElement('td');
+            var td2 = document.createElement('td');
+
+            var critLabel = makeElement('label', {
+              'for': 'activity-criteria-importance'
+            }, critName);
+
+            td1.appendChild(critLabel);
+
+            var critImpInput = makeRangeDiv({
+              'class': 'activity-criteria-importance',
+              'id': critName
+            });
+
+            td2.appendChild(critImpInput);
+
+            appendChildren(tr, [td1, td2])
+            table.appendChild(tr);
+          }());
+        }
+
+        appendChildren(formDiv, [actNameLabel, document.createElement('br'), actNameInput, document.createElement('br'), h1, table]);
+        appendChildren(parentDiv, [formDiv, toolsDiv]);
+        activityDivContainer.appendChild(parentDiv);
+      }
+
+      function submitCriteria() {
+        const criteriaDivContainer = document.getElementById('criteria-div-container');
+
+        if (criteriaDivContainer.innerHTML === "") {
+          alert("You haven't entered any criteria yet!");
+          return;
+        }
+
+        var forms = document.getElementsByClassName('criteria-div-form');
+        var totalImportance = 0;
+
+        for (var i = 0; i < forms.length; i++) {
+          var form = forms[i];
+
+          // Un-red all filled out cards
+          form.parentNode.style = "";
+
+          var criteriaName = form.getElementsByClassName('criteria-name')[0].value;
+          if (criteriaName == "") {
+            form.parentNode.style.border = "solid 1px red";
+            alert("Please fill out all fields before submitting!");
+            return;
+          }
+          var criteriaImportance = parseInt(form.getElementsByClassName('criteria-importance')[0].value);
+          totalImportance += criteriaImportance;
+
+          critData[criteriaName] = criteriaImportance;
+        }
+
+        for (var critName in critData) {
+          critData[critName] = critData[critName]/totalImportance;
+        }
+
+        // Clear criteria div
+        document.getElementById('criteria-section').innerHTML = "";
+
+        // Add stuff in activities section
+        initActivities();
+
+      }
+
+      function submitActivities() {
+        const activityDivContainer = document.getElementById('activity-div-container');
+
+        if (activityDivContainer.innerHTML === "") {
+          alert("You haven't entered any activities yet!");
+          return;
+        }
+
+        var forms = document.getElementsByClassName('activity-div-form');
+
+        for (var i = 0; i < forms.length; i++) {
+          var form = forms[i];
+
+          // Un-red all filled out cards
+          form.parentNode.style = "";
+
+          var activityName = form.getElementsByClassName('activity-name')[0].value;
+          if (activityName == "") {
+            form.parentNode.style.border = "solid 1px red";
+            alert("Please fill out all fields before submitting!");
+            return;
+          }
+          var activityCriteriaImportance = form.getElementsByClassName('activity-criteria-importance');
+          var weightedSum = 0;
+
+          for (var j = 0; j < activityCriteriaImportance.length; j++) {
+            var criteria = activityCriteriaImportance[j];
+            weightedSum += critData[criteria.id] * parseInt(criteria.value);
+          }
+          activityData[activityName] = weightedSum;
+        }
+
+        // Clear activity div
+        document.getElementById('activity-section').innerHTML = "";
+
+        displayResults();
+
+      }
+
+      function initCriteria() {
+        window.scrollTo(0, 0)
+
+        var heading = makeElement('h1', {
+          'class': 'section-heading'
+        }, 'Begin by creating the criteria that you want to measure');
+
+        var cardsContainerDiv = makeElement('div', {
+          'id': 'criteria-div-container'
+        });
+
+        appendChildren(document.getElementById('criteria-section'), [heading, cardsContainerDiv]);
+
+        addCriteriaCard();
+
+        var btn1 = makeElement('button', {
+          'type': 'button',
+          'name': 'add-criteria-btn',
+          'id': 'add-criteria-btn',
+          'class': 'add-card-btn'
+        }, '+');
+
+        btn1.addEventListener('click', addCriteriaCard);
+
+        document.getElementById('next-btn').addEventListener('click', submitCriteria);
+
+        var btnsDiv = makeElement('div', {
+          'id': 'criteria-btns-div'
+        });
+        btnsDiv.appendChild(btn1);
+
+
+        document.getElementById('criteria-section').appendChild(btnsDiv);
+      }
+
+      function initActivities(){
+        window.scrollTo(0, 0);
+
+        var heading = makeElement('h1', {
+          'class': 'section-heading'
+        }, 'Now, add and evaluate your activities');
+
+        var cardsContainerDiv = makeElement('div', {
+          'id': 'activity-div-container'
+        });
+
+        appendChildren(document.getElementById('activity-section'), [heading, cardsContainerDiv]);
+
+        addActivitiesCard();
+
+        var btn1 = makeElement('button', {
+          'type': 'button',
+          'name': 'add-activity-btn',
+          'id': 'add-activity-btn',
+          'class': 'add-card-btn'
+        }, '+');
+
+        btn1.addEventListener('click', addActivitiesCard);
+
+        document.getElementById('next-btn').removeEventListener('click', submitCriteria);
+        document.getElementById('next-btn').addEventListener('click', submitActivities);
+        document.getElementById('next-btn').innerHTML = "Find out what's best for you";
+
+        var btnsDiv = makeElement('div', {
+          'id': 'activity-btns-div'
+        });
+        btnsDiv.appendChild(btn1);
+
+        document.getElementById('activity-section').appendChild(btnsDiv);
+      }
+
+      function displayResults() {
+        window.scrollTo(0, 0);
+
+        var heading = makeElement('h1', {
+          'class': 'section-heading'
+        }, 'Your activities, sorted by how well they fit your criteria');
+        document.getElementById('results-section').appendChild(heading);
+
+        var sortable = [];
+        for (var activity in activityData) {
+          sortable.push([activity, activityData[activity]]);
+        }
+
+        sortable.sort(function(a, b) {
+            return b[1] - a[1];
+        });
+
+        var resultsDiv = document.getElementById('results-section');
+        var ol = makeElement('ol', {
+          'id': 'results-ol'
+        });
+        for (var item of sortable) {
+          var li = makeElement('li', {}, item[0]);
+          ol.appendChild(li);
+        }
+        resultsDiv.appendChild(ol);
+      }
+
+      function displayError(msg) {
+        return;
+      }
+
+      function makeRangeDiv(params) {
+        params['class'] = `${params['class']} range-parent` || "range-parent";
+        var parent = makeElement('div', params);
+        parent.value = 1;
+
+        for (let i=1; i <= 10; i++) {
+          (function () {
+            var div = makeElement('div', {
+              'class': 'range-el',
+              'id': i
+            }, i);
+            if (i == 1) {
+              div.style.backgroundColor = "#ea222a";
+            }
+            div.onmouseover = function () {
+              rangeHighlight(parent, this);
+            }
+
+            div.onmouseout = function () {
+              for (var node of parent.childNodes) {
+                if (parseInt(node.id) > parent.value){
+                  node.style.backgroundColor = "";
+                }
+              }
+            }
+
+            div.onclick = function () {
+              rangeHighlight(parent, this);
+              parent.value = parseInt(this.id);
+            }
+            parent.appendChild(div);
+          }());
+        }
+
+        return parent;
+      }
+
+      function rangeHighlight(parent, stopNode) {
+        var ascendingColors = ["#ea222a", "#dc3127", "#c74824", "#b45e25", "#b45e25", "#848e27", "#6aac30", "#4abc37", "#29b242", "#21af45"];
+
+        for (var j = 0; j < parent.childNodes.length; j++) {
+          var node = parent.childNodes[j];
+          if (node === stopNode) {
+            stopNode.style.backgroundColor = ascendingColors[j];
+            break;
+          }
+          node.style.backgroundColor = ascendingColors[j];
+        }
+      }
+    </script>
+  </body>
+</html>
