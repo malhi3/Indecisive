@@ -2,12 +2,19 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Welcome to Indecisive</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style media="screen">
       body {
         font-family: 'Noto Serif SC', serif;
+        text-align: center;
+      }
+
+      #container {
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
       }
 
       #header-section {
@@ -24,133 +31,12 @@
         display: inline-block;
       }
 
-      .section-heading {
-        text-align: center;
+      p {
+        font-size: 18px;
       }
 
-      #spacer {
-        width: 100%;
-        height: 100px;
-      }
-
-      button:focus {
-        outline: none;
-      }
-
-      input[type="text"]:focus {
-        outline: none;
-      }
-
-      ::-webkit-input-placeholder {
-         font-style: italic;
-      }
-      :-moz-placeholder {
-         font-style: italic;
-      }
-      ::-moz-placeholder {
-         font-style: italic;
-      }
-      :-ms-input-placeholder {
-         font-style: italic;
-      }
-
-      .card {
-        border: none;
-        border-bottom: 1px solid grey;
-        margin-bottom: 20px;
-        padding: 20px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-      }
-      .form-div {
-        flex-grow: 1;
-      }
-
-      .tools-div {
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .tools-div:hover {
-        color: red;
-        cursor: pointer;
-      }
-
-      label {
-        font-size: 30px;
-      }
-
-      input {
-        margin: 10px 0px;
-      }
-
-      .name-input {
-        border: none;
-        border-bottom: 3px solid black;
-        font-size: 20px;
-        width: 500px;
-      }
-
-      .add-card-btn {
-        width: 100%;
-        font-size: 30px;
-        color: white;
-        border: solid 1px #0398fc;
-        border-radius: 30px;
-        background-color: #0398fc;
-        transition: background-color 0.3s, color 0.3s;
-      }
-
-      .add-card-btn:hover {
-        cursor: pointer;
-        color: #0398fc;
-        background-color: white;
-      }
-
-      .add-card-btn:focus {
-        outline: none;
-      }
-
-      .range-parent {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-      }
-
-      td {
-        padding-right: 30px;
-      }
-
-      #activity-section .range-parent {
-        display: inline-flex;
-        margin-left: 20px;
-      }
-
-      .range-el {
-        padding: 15px 25px;
-        font-size: 20px;
-        font-family: Helvetica;
-        border: solid 1px;
-      }
-
-      .range-el:hover {
-        cursor: pointer;
-      }
-
-      #footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        pointer-events: none;
-      }
-
-      #footer button {
-        float: right;
-        margin: 20px;
+      a {
+        text-decoration: none;
         background-color: #0398fc;
         color: white;
         border: solid 1px #0398fc;
@@ -164,30 +50,10 @@
         pointer-events: auto;
       }
 
-      #footer button:hover {
+      a:hover {
         cursor: pointer;
         background-color: white;
         color: #0398fc;
-      }
-
-      .activity-criteria-el {
-        margin-bottom: 10px;
-      }
-
-      #results-section {
-        width: 50%;
-        margin-left: 25%;
-        margin-right: 25%;
-      }
-
-      #results-ol li:nth-child(-n+3) {
-        font-weight: bold;
-        font-size: 40px;
-      }
-
-      #results-ol {
-        list-style-position: inside;
-        font-size: 30px;
       }
     </style>
   </head>
@@ -197,23 +63,15 @@
         <h1 id="title">Indecisive</h1>
       </div>
 
-      <div id="criteria-section">
-      </div>
-
-      <div id="activity-section">
-      </div>
-
-      <div id="results-section"></div>
-
-      <div id="spacer"></div>
-
+      <h1>Welcome to Indecisive!</h1>
+      <h3 class="description">Don't know which clubs to prioritise this semester? Don't know which university to choose from? Don't know what work to do and when?</h3>
+      <h3 class="description">Worry not! Indecisive is here!</h3>
+      <p>&nbsp;</p>
+      <p class="description">Indecisive breaks every decision down into creating and evaluating <strong>criteria</strong> and <strong>activities</strong></p>
+      <p class="description">Indecisive then helps you evaluate all your options/activities and gives you a priority list, with the options that best fit your criteria at the top.</p>
+      <p class="description">For example, are you having trouble deciding which university to choose from? Simply break it down into criteria such as "Proximity to NYC" or "Social life" and you'll be on your way to decision-making clarity!</p>
+      <p>&nbsp;</p>
+      <a href="indecisive.html">Click here to begin!</a>
     </div>
-
-    <div id="footer">
-      <button type="button" name="next-btn" id="next-btn">Next</button>
-    </div>
-
-    <script src="js/helpers.js" charset="utf-8"></script>
-    <script src="js/main.js" charset="utf-8"></script>
   </body>
 </html>
