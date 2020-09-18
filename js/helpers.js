@@ -28,6 +28,6 @@ function appendChildren(p, c) {
 }
 
 function removeElement(id) {
-  var element = document.getElementById(id);
+  var element = document.getElementById(id)
   element.parentNode.removeChild(element);
 }
