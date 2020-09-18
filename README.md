@@ -14,4 +14,4 @@ Indecisive breaks down decision-making into evaluating criteria. Indecisive allo
 
 For example, are you having trouble deciding which university to choose from? Simply break it down into criteria such as "Proximity to NYC" or "Social life" and you'll be on your way to decision-making clarity!
 
-Try it out now!
+Try it out now at https://malhi3.github.io/Indecisive/
