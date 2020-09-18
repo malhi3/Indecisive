@@ -319,6 +319,8 @@ function initActivities(){
 function displayResults() {
   window.scrollTo(0, 0);
 
+  removeElement('next-btn');
+
   var heading = makeElement('h1', {
     'class': 'section-heading'
   }, 'Your activities, sorted by how well they fit your criteria');
